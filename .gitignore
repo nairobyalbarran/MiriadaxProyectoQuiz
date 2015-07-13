@@ -1,0 +1,6 @@
+.*
+*.zip
+*.db
+!.gitignore
+node_modules
+npm-debug.log
