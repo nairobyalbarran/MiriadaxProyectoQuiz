@@ -1,7 +1,8 @@
 .*
 *.zip
 *.db
-*.sqlite
+quiz.sqlite
 !.gitignore
 node_modules
 npm-debug.log
+.env
