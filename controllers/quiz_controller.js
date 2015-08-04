@@ -7,15 +7,37 @@ exports.index = function(req, res) {
 			res.render('quizes/index.ejs', {quizes: quizes, errors: []});
 		}
 	).catch(function(error){next(error)});
-}
+};
 
 //GET /quizes/:id
-exports.show = function(req, res){
-	res.render('quizes/show', {quiz: req.quiz, errors:[]});
-}
+exports.show = function(req, res) {
+  models.Quiz.find(req.params.quizId).then(function(quiz) {
+  res.render('quizes/show', { quiz: quiz});
+})
+};
 
 // GET /quizes/:id/answer
-exports.answer = function(req, res){
+exports.answer = function(req, res) {
+  models.Quiz.find(req.params.quizId).then(function(quiz) {
+  //var resultado = 'Incorrecto';
+  /*if (req.query.respuesta === req.quiz.respuesta) {
+    resultado = 'Correcto';
+  }
+  res.render(
+    'quizes/answer',
+    { quiz: req.quiz,
+      respuesta: resultado,
+      errors: []
+    }*/
+    if (req.query.respuesta === quiz.respuesta){
+       res.render('quizes/answer', {quiz: quiz, respuesta: 'Correcto'});
+    } else {
+       res.render('quizes/answer', {quiz: quiz, respuesta: 'Incorrecto'});
+    }
+  }) //);
+};
+// GET /quizes/:id/answer
+/*exports.answer = function(req, res){
 	var resultado= 'Incorrecto';
 	if(req.query.respuesta === req.quiz.respuesta){
 		resultado = 'Correcto';
@@ -27,7 +49,7 @@ exports.answer = function(req, res){
 	 errors: []
 	 }
 	);
-};
+};*/
 
 //DELETE / quizes/:id
 exports.destroy = function(req, res){
@@ -37,7 +59,7 @@ exports.destroy = function(req, res){
 }
 
 // GET /quizes/question
-exports.question = function (req, res) {
+/*exports.question = function (req, res) {
 	models.Quiz.findAll().then(function(quiz){
 	    res.render('quizes/question', {pregunta: quiz[0].pregunta});
 	}
@@ -53,7 +75,7 @@ exports.answer = function (req, res) {
         res.render('quizes/answer', {respuesta: 'Incorrecto'});
     }
 	});
-};
+};*/
 
 // GET /quizes/new
 exports.new = function(req, res){
